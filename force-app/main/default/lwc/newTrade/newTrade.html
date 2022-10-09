@@ -3,7 +3,7 @@
     <lightning-card title="New Trade" icon-name="standard:related_list">
 
         <template if:true={currencyOptions.data}>
-            <!-- CURRENCY LAYOUT -->
+            <!-- CURRENCY SECTION -->
             <lightning-layout>
                 <!-- SELL CURRENCY COMBOBOX -->
                 <lightning-layout-item flexibility="auto" padding="around-small" size="2">
@@ -55,7 +55,7 @@
                 </lightning-layout-item>
             </lightning-layout>
 
-            <!-- AMOUNT LAYOUT -->
+            <!-- AMOUNT SECTION -->
             <lightning-layout>
                 <!-- SELL AMOUNT  -->
                 <lightning-layout-item flexibility="auto" padding="around-small" size="2">
@@ -81,6 +81,34 @@
                         step="0.01"
                         disabled>
                     </lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!-- BUTTONS SECTION -->
+            <lightning-layout>
+                <!-- CREATE TRADE BUTTON  -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-button
+                        variant="brand" 
+                        label="Create" 
+                        title="Create Trade" 
+                        onclick={createTrade} 
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" padding="around-small" size="4">
+                </lightning-layout-item>
+
+                <!-- CANCEL CREATE TRADE BUTTON  -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-button 
+                        variant="brand-outline" 
+                        label="Cancel" 
+                        title="Cancel"
+                        onclick={cancelTrade} 
+                        class="slds-m-left_x-small">
+                    </lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
         </template>
