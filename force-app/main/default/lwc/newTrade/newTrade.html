@@ -1,5 +1,58 @@
 <template>
-    <lightning-card class="slds-var-m-top_large">
-        TODO: New trade component
+
+    <lightning-card title="New Trade" icon-name="standard:related_list">
+
+        <template if:true={currencyOptions.data}>
+            <!-- CURRENCY LAYOUT -->
+            <lightning-layout>
+                <!-- SELL CURRENCY COMBOBOX -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-combobox 
+                        label="Sell Currency" 
+                        value={value}
+                        options={currencyOptions.data.values}
+                        onblur={handleSelectedSellCurrency} 
+                        placeholder="Select Sell Currency"
+                        dropdown-alignment="auto" 
+                        required>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                
+                <!-- ARROW RIGHT -->
+                <p class="slds-align_absolute-center">
+                    <lightning-icon icon-name="utility:right" alternative-text="right" title="arrow-right"></lightning-icon>
+                </p>
+                <!-- RATE -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-input 
+                        type="number" 
+                        name="rate" 
+                        label="Rate" 
+                        value={getRate}
+                        formatter="currency"
+                        disabled>
+                    </lightning-input>
+                </lightning-layout-item>
+                <!-- ARROW RIGHT -->
+                <p class="slds-align_absolute-center">
+                    <lightning-icon icon-name="utility:right" alternative-text="right" title="arrow-right"></lightning-icon>
+                </p>
+
+                <!-- BUE CURRENCY COMBOBOX -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-combobox 
+                        label="Buy Currency" 
+                        value={value} 
+                        options={currencyOptions.data.values}
+                        onblur={handleSelectedBuyCurrency} 
+                        placeholder="Select Buy Currency" 
+                        dropdown-alignment="auto" 
+                        required>
+                    </lightning-combobox>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+
     </lightning-card>
+
 </template>
