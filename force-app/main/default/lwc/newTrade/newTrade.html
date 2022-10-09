@@ -86,6 +86,21 @@
 
             <!-- BUTTONS SECTION -->
             <lightning-layout>
+                
+                <!-- CANCEL CREATE TRADE BUTTON  -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-button 
+                        variant="brand-outline" 
+                        label="Cancel" 
+                        title="Cancel" 
+                        onclick={cancelTrade}
+                        class="slds-m-left_x-medium">
+                    </lightning-button>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" padding="around-small" size="4">
+                </lightning-layout-item>
+
                 <!-- CREATE TRADE BUTTON  -->
                 <lightning-layout-item flexibility="auto" padding="around-small" size="2">
                     <lightning-button
@@ -93,21 +108,7 @@
                         label="Create" 
                         title="Create Trade" 
                         onclick={createTrade} 
-                        class="slds-m-left_x-small">
-                    </lightning-button>
-                </lightning-layout-item>
-
-                <lightning-layout-item flexibility="auto" padding="around-small" size="4">
-                </lightning-layout-item>
-
-                <!-- CANCEL CREATE TRADE BUTTON  -->
-                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
-                    <lightning-button 
-                        variant="brand-outline" 
-                        label="Cancel" 
-                        title="Cancel"
-                        onclick={cancelTrade} 
-                        class="slds-m-left_x-small">
+                        class="slds-m-left_x-medium">
                     </lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
