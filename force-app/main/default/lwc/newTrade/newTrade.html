@@ -31,7 +31,6 @@
                         name="rate" 
                         label="Rate" 
                         value={getRate}
-                        formatter="currency"
                         disabled>
                     </lightning-input>
                 </lightning-layout-item>
@@ -53,6 +52,35 @@
                         dropdown-alignment="auto" 
                         required>
                     </lightning-combobox>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!-- AMOUNT LAYOUT -->
+            <lightning-layout>
+                <!-- SELL AMOUNT  -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-input 
+                        type="number" 
+                        name="sell-amount" 
+                        label="Sell Amount" 
+                        step="0.01"
+                        required>
+                    </lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" padding="around-small" size="4">
+                </lightning-layout-item>
+
+                <!-- BUY AMOUNT  -->
+                <lightning-layout-item flexibility="auto" padding="around-small" size="2">
+                    <lightning-input 
+                        type="number" 
+                        name="buy-amount" 
+                        value={getBuyAmount}
+                        label="Buy Amount"
+                        step="0.01"
+                        disabled>
+                    </lightning-input>
                 </lightning-layout-item>
             </lightning-layout>
         </template>
