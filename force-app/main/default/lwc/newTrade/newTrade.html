@@ -9,9 +9,9 @@
                 <lightning-layout-item flexibility="auto" padding="around-small" size="2">
                     <lightning-combobox 
                         label="Sell Currency" 
-                        value={value}
+                        value={sellCurrencySelected}
                         options={currencyOptions.data.values}
-                        onblur={handleSelectedSellCurrency} 
+                        onchange={handleSelectedSellCurrency} 
                         placeholder="Select Sell Currency"
                         dropdown-alignment="auto" 
                         required>
@@ -30,7 +30,7 @@
                         type="number" 
                         name="rate" 
                         label="Rate" 
-                        value={getRate}
+                        value={rate}
                         disabled>
                     </lightning-input>
                 </lightning-layout-item>
@@ -45,9 +45,9 @@
                 <lightning-layout-item flexibility="auto" padding="around-small" size="2">
                     <lightning-combobox 
                         label="Buy Currency" 
-                        value={value} 
+                        value={buyCurrencySelected} 
                         options={currencyOptions.data.values}
-                        onblur={handleSelectedBuyCurrency} 
+                        onchange={handleSelectedBuyCurrency} 
                         placeholder="Select Buy Currency" 
                         dropdown-alignment="auto" 
                         required>
