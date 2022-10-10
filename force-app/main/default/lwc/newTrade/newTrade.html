@@ -31,6 +31,7 @@
                         name="rate" 
                         label="Rate" 
                         value={rate}
+                        step="0.0001"
                         disabled>
                     </lightning-input>
                 </lightning-layout-item>
@@ -62,7 +63,8 @@
                     <lightning-input 
                         type="number" 
                         name="sell-amount" 
-                        label="Sell Amount" 
+                        label="Sell Amount"
+                        onchange={handleSellAmountChange}  
                         step="0.01"
                         required>
                     </lightning-input>
@@ -76,7 +78,7 @@
                     <lightning-input 
                         type="number" 
                         name="buy-amount" 
-                        value={getBuyAmount}
+                        value={buyAmount}
                         label="Buy Amount"
                         step="0.01"
                         disabled>

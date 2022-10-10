@@ -25,6 +25,7 @@ public with sharing class NewTradeController {
                     Map<String, Object> resultsMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
                     Map<String, Object> ratesMap = (Map<String, Object>)resultsMap.get('rates');
                     rate = (Decimal)ratesMap.get(buyCurrency);
+                    System.debug('rate: ' + rate);
                 } else {
                     throw new CalloutException('CalloutException: ' + response.getBody());
                 }

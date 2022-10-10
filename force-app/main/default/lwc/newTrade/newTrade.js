@@ -1,4 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { ShowToastEvent }                     from 'lightning/platformShowToastEvent';
+
 
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getObjectInfo }     from 'lightning/uiObjectInfoApi';
@@ -10,12 +12,26 @@ import getRate from '@salesforce/apex/NewTradeController.getRate';
 
 export default class NewTrade extends LightningElement {
 
+    //API
+    @api TOAST_VARIANT = {
+       ERROR   : 'error',
+       SUCCESS : 'success',
+       WARNING : 'warning'
+    }
+    
+    @api TOAST_TITLE = {
+       ERROR   : 'Error',
+       SUCCESS : 'Success',
+       WARNING : 'Warning'
+   }
+
     //TRACKS
     @track sellCurrencyOptions  = [];
     @track buyCurrencyOptions   = [];
     @track sellCurrencySelected;
     @track buyCurrencySelected;
     @track rate;
+    @track buyAmount;
     
     //WIRES
     @wire(getObjectInfo, { objectApiName: TRADE_OBJECT })
@@ -32,9 +48,10 @@ export default class NewTrade extends LightningElement {
         
         this.sellCurrencySelected = element.target.value;
         console.log('Sell Currency: ', this.sellCurrencySelected);
-        if (this.sellCurrencySelected != undefined || this.sellCurrencySelected != null) {
+        
+        if (this.buyCurrencySelected != undefined || this.buyCurrencySelected != null) {
            this.getRate(); 
-        };
+        }
     }
     
     handleSelectedBuyCurrency(element) {
@@ -43,18 +60,41 @@ export default class NewTrade extends LightningElement {
 		this.buyCurrencySelected = element.target.value;
         console.log('Buy Currency: ', this.buyCurrencySelected);
 
-        if (this.buyCurrencySelected != undefined || this.buyCurrencySelected != null) {
+        if (this.sellCurrencySelected != undefined || this.sellCurrencySelected != null) {
            this.getRate(); 
+        };
+        
+    }
+
+    handleSellAmountChange(element) {
+        if (element.target.value < 0) {
+            this.showToast(this.TOAST_TITLE.WARNING, 'Sell Amount: Cannot be negative.', this.TOAST_VARIANT.WARNING);
+        } else if (this.rate !== undefined && this.rate !== null) {
+            let sellAmount = element.target.value;
+            this.buyAmount = sellAmount * this.rate;
+        } else {
+            this.showToast(this.TOAST_TITLE.WARNING, 'Rate: No value found.', this.TOAST_VARIANT.WARNING);
         }
     }
 
+    //ASSYNCS
     async getRate() {
-        console.log('getRate');
         let response  = await getRate({
             sellCurrency : this.sellCurrencySelected,
             buyCurrency  : this.buyCurrencySelected,
         });
         this.rate = response;
     }
+
+    //TOAST
+    showToast(title, message, variant) {
+        const event = new ShowToastEvent({
+            title,
+            message,
+            variant
+        });
+        this.dispatchEvent(event);
+    }
+    
 
 }
