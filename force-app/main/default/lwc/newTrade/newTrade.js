@@ -79,11 +79,24 @@ export default class NewTrade extends LightningElement {
 
     //ASSYNCS
     async getRate() {
+
         let response  = await getRate({
             sellCurrency : this.sellCurrencySelected,
             buyCurrency  : this.buyCurrencySelected,
         });
-        this.rate = response;
+
+        let rateResponse = JSON.parse(response.ResponseJSON);
+
+        if (response.HasError || rateResponse.length < 1) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
+
+            setTimeout(() => {
+                this.navigateToObjectHome('Trade__c');
+            }, '6000');
+
+        } else {
+            this.rate = rateResponse.Rate;
+        }
     }
 
     //TOAST
@@ -97,4 +110,13 @@ export default class NewTrade extends LightningElement {
     }
     
 
+    navigateToObjectHome(objectApiName) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: objectApiName,
+                actionName: 'home',
+            },
+        });
+    }
 }
