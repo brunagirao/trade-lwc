@@ -167,6 +167,12 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         this.createNewTrade(tradeInfo);
     }
 
+    cancelTrade() {
+        setTimeout(() => {
+            this.navigateToObjectHome('Trade__c');
+        }, '1000');
+    }
+
     navigateToRecordPage(recordId, objectApiName) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
