@@ -32,6 +32,7 @@ export default class NewTrade extends LightningElement {
     @track buyCurrencySelected;
     @track rate;
     @track buyAmount;
+    @track sellAmount;
     
     //WIRES
     @wire(getObjectInfo, { objectApiName: TRADE_OBJECT })
@@ -70,8 +71,8 @@ export default class NewTrade extends LightningElement {
         if (element.target.value < 0) {
             this.showToast(this.TOAST_TITLE.WARNING, 'Sell Amount: Cannot be negative.', this.TOAST_VARIANT.WARNING);
         } else if (this.rate !== undefined && this.rate !== null) {
-            let sellAmount = element.target.value;
-            this.buyAmount = sellAmount * this.rate;
+            this.sellAmount = element.target.value;
+            this.buyAmount  =  this.sellAmount * this.rate;
         } else {
             this.showToast(this.TOAST_TITLE.WARNING, 'Rate: No value found.', this.TOAST_VARIANT.WARNING);
         }
