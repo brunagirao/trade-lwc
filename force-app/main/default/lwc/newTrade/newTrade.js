@@ -1,5 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent }                     from 'lightning/platformShowToastEvent';
+import { NavigationMixin }                    from 'lightning/navigation';
 
 
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
@@ -8,9 +9,10 @@ import { getObjectInfo }     from 'lightning/uiObjectInfoApi';
 import CURRENCIES            from '@salesforce/schema/Trade__c.Sell_Currency__c';
 import TRADE_OBJECT          from '@salesforce/schema/Trade__c';
 
-import getRate from '@salesforce/apex/NewTradeController.getRate';
+import getRate               from '@salesforce/apex/NewTradeController.getRate';
+import createNewTrade        from '@salesforce/apex/NewTradeController.createNewTrade';
 
-export default class NewTrade extends LightningElement {
+export default class NewTrade extends NavigationMixin(LightningElement) {
 
     //API
     @api TOAST_VARIANT = {
@@ -90,13 +92,29 @@ export default class NewTrade extends LightningElement {
 
         if (response.HasError || rateResponse.length < 1) {
             this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
-
             setTimeout(() => {
                 this.navigateToObjectHome('Trade__c');
             }, '6000');
-
         } else {
             this.rate = rateResponse.Rate;
+        }
+
+    }
+
+    async createNewTrade(tradeInfo) {
+        let response = await createNewTrade({
+            tradeInfoJSON: JSON.stringify(tradeInfo)
+        });
+        
+        let tradeResponse = JSON.parse(response.ResponseJSON);
+
+        if (response.HasError || tradeResponse.length < 1) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Erro Create New Trade', this.TOAST_VARIANT.ERROR);
+        } else {
+            this.showToast(this.TOAST_TITLE.SUCCESS, 'Trade Created', this.TOAST_VARIANT.SUCCESS);
+            setTimeout(() => {
+                this.navigateToRecordPage(tradeResponse.Id, 'Trade__c');
+            }, '1000');
         }
     }
 
@@ -110,6 +128,55 @@ export default class NewTrade extends LightningElement {
         this.dispatchEvent(event);
     }
     
+    //OTHER METHODS
+    sendNewTrade() {
+        console.log('SEND NEW TRADE');
+        if (this.sellCurrencySelected == undefined || this.sellCurrencySelected == null) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Sell Currency: No currency selected.', this.TOAST_VARIANT.ERROR);
+            return 0;
+        }
+
+        if (this.buyCurrencySelected == undefined || this.buyCurrencySelected == null) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Buy Currency: No currency selected.', this.TOAST_VARIANT.ERROR);
+            return 0;
+        }
+
+        if (this.sellAmount < 0 ) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Sell Amount: Cannot be negative.', this.TOAST_VARIANT.ERROR);
+            return 0;
+        }
+
+        if (this.buyAmount == undefined || this.buyAmount == null) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Buy Amount: No value found.', this.TOAST_VARIANT.ERROR);
+            return 0;
+        }
+
+        if (this.rate == undefined || this.rate == null) { 
+            this.showToast(this.TOAST_TITLE.ERROR, 'Rate: No value found.', this.TOAST_VARIANT.ERROR);
+            return 0;
+        }
+
+        let tradeInfo = {
+            sellCurrency : this.sellCurrencySelected,
+            buyCurrency  : this.buyCurrencySelected,
+            sellAmount   : this.sellAmount,
+            buyAmount    : this.buyAmount,
+            rate         : this.rate
+        }
+        
+        this.createNewTrade(tradeInfo);
+    }
+
+    navigateToRecordPage(recordId, objectApiName) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recordId,
+                objectApiName: objectApiName,
+                actionName: 'view'
+            }
+        });
+    }
 
     navigateToObjectHome(objectApiName) {
         this[NavigationMixin.Navigate]({
