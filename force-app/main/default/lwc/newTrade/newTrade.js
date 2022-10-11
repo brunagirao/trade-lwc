@@ -50,8 +50,8 @@ export default class NewTrade extends LightningElement {
         this.sellCurrencySelected = element.target.value;
         console.log('Sell Currency: ', this.sellCurrencySelected);
         
-        if (this.buyCurrencySelected != undefined || this.buyCurrencySelected != null) {
-           this.getRate(); 
+        if (this.buyCurrencySelected !== undefined && this.buyCurrencySelected !== null) {
+            this.getRate(); 
         }
     }
     
@@ -61,9 +61,9 @@ export default class NewTrade extends LightningElement {
 		this.buyCurrencySelected = element.target.value;
         console.log('Buy Currency: ', this.buyCurrencySelected);
 
-        if (this.sellCurrencySelected != undefined || this.sellCurrencySelected != null) {
-           this.getRate(); 
-        };
+        if (this.sellCurrencySelected !== undefined && this.sellCurrencySelected !== null) {
+            this.getRate(); 
+        }
         
     }
 
