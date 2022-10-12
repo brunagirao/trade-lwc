@@ -1,9 +1,10 @@
-A new trade has been created with the following data: <br>
+A <strong>New Trade</strong> has been created with the following data: <br><br>
 
-Sell Currency:  {!Trade__c.Sell_Currency__c} <br>
-Sell Amount:    {!Trade__c.Sell_Amount__c}   <br>
-Buy Currency: {!Trade__c.Buy_Currency__c} <br>
-Buy Amount:    {!Trade__c.Buy_Amount__c} <br>
-Rate:                {!Trade__c.Rate__c}              <br>
-Booked Date:   {!Trade__c.CreatedDate}       <br>
-Link to the trade: {!Trade__c.Link}
+
+<b>Sell Currency: </b>  {!Trade__c.Sell_Currency__c} <br>
+<b>Sell Amount: </b>    {!Trade__c.Sell_Amount__c}   <br>
+<b>Buy Currency:</b>  {!Trade__c.Buy_Currency__c} <br>
+<b>Buy Amount: </b>    {!Trade__c.Buy_Amount__c} <br>
+<b>Rate: </b>                {!Trade__c.Rate__c}              <br>
+<b>Booked Date:</b>    {!Trade__c.CreatedDate}       <br>
+<b>Link to the trade:</b> <a href="{!Trade__c.Link} " target="_blank">View Trade</a>
