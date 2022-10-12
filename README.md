@@ -94,7 +94,6 @@
 
 #### Named Credentials
 ![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/named_credentials.png)
-![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/named_credentials_detail.png)
 
 ####  Ebury Trade Settings
 ![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/custom_settings.png)
