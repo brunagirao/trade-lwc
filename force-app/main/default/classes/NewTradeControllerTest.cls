@@ -32,8 +32,60 @@ public with sharing class NewTradeControllerTest {
             Rate__c             = 1.458
         );
         newTrades.add(tradeGBP);
-
         insert newTrades;
+
+        EburyTradeSettings__c eburySettings = new EburyTradeSettings__c(
+            Name                            = 'Default',
+            ApiKey__c                       = 'ZWKQQTDGZQCKMLCXQPN3T7EPLVECWTJK958XYTVB',
+            EburyQueue__c                   = 'TradeReviewers',
+            TemplateEmailNotification__c    = 'NewTrade'
+        );
+        insert eburySettings;
+    }
+
+    @isTest
+    public static void getRateSuccessTest(){
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(200));    
+        Test.startTest();
+            ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
+            System.assertEquals(response.HasError, false);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void getRateInvalidBaseCurrencyErrorTest(){
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(201));    
+        Test.startTest();
+            ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
+            System.assertEquals(response.HasError, true);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void getRateInvalidCurrencyCodesErrorTest(){
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(202));    
+        Test.startTest();
+            ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
+            System.assertEquals(response.HasError, true);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void getRateUnauthorizedErrorTest(){
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(401));    
+        Test.startTest();
+            ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
+            System.assertEquals(response.HasError, true);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void getRateGenericErrorTest(){
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock());    
+        Test.startTest();
+            ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
+            System.assertEquals(response.HasError, true);
+        Test.stopTest();
     }
 
     @isTest
