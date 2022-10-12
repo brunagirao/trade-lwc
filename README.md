@@ -113,7 +113,7 @@
 ![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/test_class.png)
 ![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/test_class_resumed.png)
 
-### **REQ4.**Salesforce CLI and Salesforce DX [Done]
+### **REQ5.** Salesforce CLI and Salesforce DX [Done]
 - This application will be deployed using **Salesforce CLI and Salesforce DX**
 - Update the **build.sh** script to create the scratch org if needed and leave it ready for testing.
 
