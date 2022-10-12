@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ET_BUY_AMOUNT_VALUE_NOT_FOUND</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_BUY_AMOUNT_VALUE_NOT_FOUND</shortDescription>
+        <value>Buy Amount: Value not found</value>
+    </labels>
+    <labels>
+        <fullName>ET_BUY_CURRENCY_NOT_SELECTED</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_BUY_CURRENCY_NOT_SELECTED</shortDescription>
+        <value>Buy Currency: Currency not selected</value>
+    </labels>
+    <labels>
+        <fullName>ET_RATE_VALUE_NOT_FOUND</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_RATE_VALUE_NOT_FOUND</shortDescription>
+        <value>Rate: Value not found</value>
+    </labels>
+    <labels>
+        <fullName>ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE</shortDescription>
+        <value>Sell Amount: Cannot be negative</value>
+    </labels>
+    <labels>
+        <fullName>ET_SELL_CURRENCY_NOT_SELECTED</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_SELL_CURRENCY_NOT_SELECTED</shortDescription>
+        <value>Sell Currency: Currency not selected</value>
+    </labels>
+    <labels>
+        <fullName>ET_TRADE_CREATED_SUCCESS</fullName>
+        <categories>Ebury Trading</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ET_TRADE_CREATED_SUCCESS</shortDescription>
+        <value>Trade created successfully! Trade Number:</value>
+    </labels>
+</CustomLabels>
