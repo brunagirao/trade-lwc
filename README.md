@@ -1,6 +1,6 @@
 
 # Ebury Trading App
-
+![My Image](https://github.com/brunagirao/trade-lwc/blob/master/images/trade.jpeg)
 ## Ebury Requirements Test
 - We want to build a new web application that will allow us to create and store foreign exchange trades.
 - The main view is the Ebury Trading application, which contains a Trade list view, displaying the list of already booked trades and the relevant fields
