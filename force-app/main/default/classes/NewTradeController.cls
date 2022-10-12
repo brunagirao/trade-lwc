@@ -129,10 +129,6 @@ public with sharing class NewTradeController {
     }
 
     public class RateResponse {
-        @AuraEnabled public String  Base      {get; set;} 
-        @AuraEnabled public Boolean Success   {get; set;}
-        @AuraEnabled public Decimal TimeStamp {get; set;}
-        @AuraEnabled public Date    DateRate  {get; set;} 
         @AuraEnabled public Decimal Rate      {get; set;}
 
         public RateResponse () {}
