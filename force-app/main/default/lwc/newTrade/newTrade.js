@@ -12,6 +12,13 @@ import TRADE_OBJECT          from '@salesforce/schema/Trade__c';
 import getRate               from '@salesforce/apex/NewTradeController.getRate';
 import createNewTrade        from '@salesforce/apex/NewTradeController.createNewTrade';
 
+//CUSTOM LABELS | ET = Ebury Trading
+import ET_BUY_AMOUNT_VALUE_NOT_FOUND        from '@salesforce/label/c.ET_BUY_AMOUNT_VALUE_NOT_FOUND';		
+import ET_BUY_CURRENCY_NOT_SELECTED         from '@salesforce/label/c.ET_BUY_CURRENCY_NOT_SELECTED';
+import ET_RATE_VALUE_NOT_FOUND	            from '@salesforce/label/c.ET_RATE_VALUE_NOT_FOUND';
+import ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE    from '@salesforce/label/c.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE';
+import ET_SELL_CURRENCY_NOT_SELECTED        from '@salesforce/label/c.ET_SELL_CURRENCY_NOT_SELECTED';
+
 export default class NewTrade extends NavigationMixin(LightningElement) {
 
     //API
@@ -25,7 +32,16 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
        ERROR   : 'Error',
        SUCCESS : 'Success',
        WARNING : 'Warning'
-   }
+    }
+    
+    //CUSTOM LABELS
+    LABEL = {
+        ET_BUY_AMOUNT_VALUE_NOT_FOUND,			
+        ET_BUY_CURRENCY_NOT_SELECTED,
+        ET_RATE_VALUE_NOT_FOUND,
+        ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE,	
+        ET_SELL_CURRENCY_NOT_SELECTED
+    }
 
     //TRACKS
     @track sellCurrencyOptions  = [];
@@ -71,16 +87,16 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
 
     handleSellAmountChange(element) {
         if (element.target.value < 0) {
-            this.showToast(this.TOAST_TITLE.WARNING, 'Sell Amount: Cannot be negative.', this.TOAST_VARIANT.WARNING);
+            this.showToast(this.TOAST_TITLE.WARNING, this.LABEL.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE, this.TOAST_VARIANT.WARNING);
         } else if (this.rate !== undefined && this.rate !== null) {
             this.sellAmount = element.target.value;
             this.buyAmount  =  this.sellAmount * this.rate;
         } else {
-            this.showToast(this.TOAST_TITLE.WARNING, 'Rate: No value found.', this.TOAST_VARIANT.WARNING);
+            this.showToast(this.TOAST_TITLE.WARNING, this.LABEL.ET_RATE_VALUE_NOT_FOUND, this.TOAST_VARIANT.WARNING);
         }
     }
 
-    //ASSYNCS
+    //ASYNCS
     async getRate() {
 
         let response  = await getRate({
@@ -109,9 +125,9 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         let tradeResponse = JSON.parse(response.ResponseJSON);
 
         if (response.HasError || tradeResponse.length < 1) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Erro Create New Trade', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, response.Message, this.TOAST_VARIANT.ERROR);
         } else {
-            this.showToast(this.TOAST_TITLE.SUCCESS, 'Trade Created', this.TOAST_VARIANT.SUCCESS);
+            this.showToast(this.TOAST_TITLE.SUCCESS, response.Message, this.TOAST_VARIANT.SUCCESS);
             setTimeout(() => {
                 this.navigateToRecordPage(tradeResponse.Id, 'Trade__c');
             }, '1000');
@@ -130,29 +146,29 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
     
     //OTHER METHODS
     sendNewTrade() {
-        console.log('SEND NEW TRADE');
+
         if (this.sellCurrencySelected == undefined || this.sellCurrencySelected == null) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Sell Currency: No currency selected.', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_SELL_CURRENCY_NOT_SELECTED, this.TOAST_VARIANT.ERROR);
             return 0;
         }
 
         if (this.buyCurrencySelected == undefined || this.buyCurrencySelected == null) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Buy Currency: No currency selected.', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_BUY_CURRENCY_NOT_SELECTED, this.TOAST_VARIANT.ERROR);
             return 0;
         }
 
         if (this.sellAmount < 0 ) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Sell Amount: Cannot be negative.', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE, this.TOAST_VARIANT.ERROR);
             return 0;
         }
 
         if (this.buyAmount == undefined || this.buyAmount == null) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Buy Amount: No value found.', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_BUY_AMOUNT_VALUE_NOT_FOUND, this.TOAST_VARIANT.ERROR);
             return 0;
         }
 
         if (this.rate == undefined || this.rate == null) { 
-            this.showToast(this.TOAST_TITLE.ERROR, 'Rate: No value found.', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_RATE_VALUE_NOT_FOUND, this.TOAST_VARIANT.ERROR);
             return 0;
         }
 

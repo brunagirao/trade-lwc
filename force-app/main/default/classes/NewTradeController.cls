@@ -54,8 +54,10 @@ public with sharing class NewTradeController {
             );
             insert trade;
 
+            String tradeNumber = [SELECT Name FROM Trade__c WHERE Id =: trade.Id].Name;
+
             ActionResponse.Response tradeResponse = new ActionResponse.Response(
-                false, 'Trade Created', JSON.serialize(trade)
+                false, System.Label.ET_TRADE_CREATED_SUCCESS + ' ' + tradeNumber, JSON.serialize(trade)
             );
             return tradeResponse;
             
