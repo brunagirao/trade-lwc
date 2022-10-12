@@ -54,6 +54,10 @@ public with sharing class NewTradeController {
             );
             insert trade;
 
+            if(trade.Id != null) {
+                sendNotificationNewTrade(trade);
+            }
+            
             String tradeNumber = [SELECT Name FROM Trade__c WHERE Id =: trade.Id].Name;
 
             ActionResponse.Response tradeResponse = new ActionResponse.Response(
