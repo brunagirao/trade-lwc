@@ -59,7 +59,14 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
     @wire(getPicklistValues, { recordTypeId: '$tradeInfo.data.defaultRecordTypeId', fieldApiName: CURRENCIES })
     currencyOptions;
 
-    connectedCallback() {}
+    //CALLBACK  
+    connectedCallback() {
+        this.sellCurrencySelected = '';
+        this.buyCurrencySelected  = '';
+        this.rate                 = '';
+        this.buyAmount            = '';
+        this.sellAmount           = '';
+    }
 
     //HANDLES
     handleSelectedSellCurrency(element) {
@@ -99,21 +106,23 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
     //ASYNCS
     async getRate() {
 
-        let response  = await getRate({
-            sellCurrency : this.sellCurrencySelected,
-            buyCurrency  : this.buyCurrencySelected,
-        });
+        // let response  = await getRate({
+        //     sellCurrency : this.sellCurrencySelected,
+        //     buyCurrency  : this.buyCurrencySelected,
+        // });
 
-        let rateResponse = JSON.parse(response.ResponseJSON);
+        // let rateResponse = JSON.parse(response.ResponseJSON);
 
-        if (response.HasError || rateResponse.length < 1) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
-            setTimeout(() => {
-                this.navigateToObjectHome('Trade__c');
-            }, '6000');
-        } else {
-            this.rate = rateResponse.Rate;
-        }
+        // if (response.HasError || rateResponse.length < 1) {
+        //     this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
+        //     setTimeout(() => {
+        //         this.navigateToObjectHome('Trade__c');
+        //     }, '6000');
+        // } else {
+        //     this.rate = rateResponse.Rate;
+        // }
+
+        this.rate = 1.589;
 
     }
 
@@ -187,6 +196,8 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         setTimeout(() => {
             this.navigateToObjectHome('Trade__c');
         }, '1000');
+
+        this.closeTab();
     }
 
     navigateToRecordPage(recordId, objectApiName) {
