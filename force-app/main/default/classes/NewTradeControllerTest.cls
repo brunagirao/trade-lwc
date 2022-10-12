@@ -129,12 +129,9 @@ public with sharing class NewTradeControllerTest {
         
         Test.startTest();
 
-            try {
-                ActionResponse.Response response = NewTradeController.createNewTrade(null);
-                System.assertEquals(response.HasError, true);
-            } catch (Exception e) {
-                System.debug('Error: ' + e.getMessage());
-            }
+            ActionResponse.Response response = NewTradeController.createNewTrade(null);
+            System.assertEquals(response.HasError, true);
+            new ActionResponse.Response('Error');
             
         Test.stopTest();
     }
@@ -165,17 +162,23 @@ public with sharing class NewTradeControllerTest {
 
         Test.startTest();
 
-            try {
-                Trade__c trade = null;
+            Trade__c trade = null;
 
-                NewTradeController.sendNotificationNewTrade(null);
-                System.assertEquals(trade, null);
+            NewTradeController.sendNotificationNewTrade(null);
+            System.assertEquals(trade, null);
 
-            } catch (Exception e) {
-                System.debug('Error: ' + e.getMessage());
-            }
-            
         Test.stopTest();
+    }
 
+    @isTest
+    public static void emptyConstructorsTest() {
+
+        Test.startTest();
+
+            NewTradeController.RateResponse rateResponse = new NewTradeController.RateResponse();
+            NewTradeController.TradeInfo tradeInfo       = new NewTradeController.TradeInfo();
+            ActionResponse  actionResponse               = new ActionResponse();
+
+        Test.stopTest();
     }
 }
