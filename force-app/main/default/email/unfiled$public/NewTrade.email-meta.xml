@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>template email to notify the users about a new trade created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>New Trade</name>
+    <style>none</style>
+    <subject>Ebury Trading : New Trade Created!</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
