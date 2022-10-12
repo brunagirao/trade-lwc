@@ -45,46 +45,61 @@ public with sharing class NewTradeControllerTest {
 
     @isTest
     public static void getRateSuccessTest(){
-        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(200));    
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(200));
+
         Test.startTest();
+
             ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
             System.assertEquals(response.HasError, false);
+
         Test.stopTest();
     }
 
     @isTest
     public static void getRateInvalidBaseCurrencyErrorTest(){
-        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(201));    
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(201));  
+
         Test.startTest();
+
             ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
             System.assertEquals(response.HasError, true);
+
         Test.stopTest();
     }
 
     @isTest
     public static void getRateInvalidCurrencyCodesErrorTest(){
-        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(202));    
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(202));  
+
         Test.startTest();
+        
             ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
             System.assertEquals(response.HasError, true);
+
         Test.stopTest();
     }
 
     @isTest
     public static void getRateUnauthorizedErrorTest(){
         Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock(401));    
+
         Test.startTest();
+
             ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
             System.assertEquals(response.HasError, true);
+
         Test.stopTest();
     }
 
     @isTest
     public static void getRateGenericErrorTest(){
-        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock());    
+        Test.setMock(HttpCalloutMock.class, new NewTradeControllerMock()); 
+
         Test.startTest();
+
             ActionResponse.Response response = NewTradeController.getRate('EUR', 'USD');
             System.assertEquals(response.HasError, true);
+
         Test.stopTest();
     }
 
@@ -97,7 +112,7 @@ public with sharing class NewTradeControllerTest {
              SELECT Buy_Amount__c, Buy_Currency__c, 
                     Rate__c, Sell_Amount__c, Sell_Currency__c
                FROM Trade__c 
-              WHERE Sell_Currency__c IN ('USD', 'GBP', 'EUR')
+              WHERE Sell_Currency__c =: 'GBP'
               LIMIT 1
             ];
 
@@ -122,5 +137,45 @@ public with sharing class NewTradeControllerTest {
             }
             
         Test.stopTest();
+    }
+
+    @isTest
+    public static void sendNotificationNewTradeSuccessTest() {
+
+        Test.startTest();
+        
+           Trade__c trade = [
+             SELECT Id, Buy_Amount__c, Buy_Currency__c, 
+                    Rate__c, Sell_Amount__c, Sell_Currency__c,
+                    CreatedDate
+               FROM Trade__c 
+              WHERE Sell_Currency__c =: 'USD'
+              LIMIT 1
+            ];
+
+            NewTradeController.sendNotificationNewTrade(trade);
+            System.assertNotEquals(trade, null);
+            
+        Test.stopTest();
+
+    }
+
+    @isTest
+    public static void sendNotificationNewTradeErrorTest() {
+
+        Test.startTest();
+
+            try {
+                Trade__c trade = null;
+
+                NewTradeController.sendNotificationNewTrade(null);
+                System.assertEquals(trade, null);
+
+            } catch (Exception e) {
+                System.debug('Error: ' + e.getMessage());
+            }
+            
+        Test.stopTest();
+
     }
 }
