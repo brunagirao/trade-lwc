@@ -20,7 +20,7 @@
 
 ## IMPORTANT! | Ebury Custom Settings
 
-- After push the components of this project in Salesforce a **Custom Setting** named **Ebury Custom Setting** will be created. So, you need fill the follow field with the correct data for the code execute as expected:
+- After push the components of this project in Salesforce a **Custom Setting** named **Ebury Custom Setting** will be created. So, you need fill the fields below with the correct data for the code execute as expected:
 - **ApiKey**: get your key in [Fixer API](https://apilayer.com/marketplace/fixer-api#pricing) site. My apiKey is C2NlwIvwyXnRC2smGYyGRc9kDlctJ82O
 - **Ebury Queue:** TradeReviewers
 - **Template Email Notification:** NewTrade
