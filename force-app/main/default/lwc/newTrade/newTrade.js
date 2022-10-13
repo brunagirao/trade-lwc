@@ -2,13 +2,15 @@ import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent }                     from 'lightning/platformShowToastEvent';
 import { NavigationMixin }                    from 'lightning/navigation';
 
-
+//GET PICKLIST VALUES N' OBJECT INFO
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getObjectInfo }     from 'lightning/uiObjectInfoApi';
 
+//DEFINING VARIABLES TO GET PICKLIST AND OBJECT INFO
 import CURRENCIES            from '@salesforce/schema/Trade__c.Sell_Currency__c';
 import TRADE_OBJECT          from '@salesforce/schema/Trade__c';
 
+//IMPORT APEX METHODS
 import getRate               from '@salesforce/apex/NewTradeController.getRate';
 import createNewTrade        from '@salesforce/apex/NewTradeController.createNewTrade';
 
@@ -209,6 +211,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         this.sellAmount           = undefined;
     }
 
+    //NAVIGATION
     navigateToRecordPage(recordId, objectApiName) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
