@@ -1,7 +1,35 @@
+/************************************************************************************************
+* Name      : NewTradeController
+* TestClass : NewTradeControllerTest
+* Purpose   : Controller class of Trade__c object
+* Author    : Bruna Girão
+* Date      : 07-10-2022  
+--------------------------------------------------------------------------------------------------
+Date                Modified By            Description
+--------------------------------------------------------------------------------------------------
+07-10-2022          Bruna Girão         create class 
+09-10-2022          Bruna Girão         create logic to get rate from fixer.io
+                                        adjust return of the getRate method
+                                        create the inner class RateResponse
+10-10-2022          Bruna Girão         create createNewTrade methods
+11-10-2022          Bruna Girão         create sendNotificationNewTrade to notify users about 
+                                        new trades
+12-10-2022          Bruna Girão         remove unused fields NewTradeController
+                                        add ET_TRADE_CREATED_SUCCESS custom label to createNewTrade
+                                        method
+***************************************************************************************************/
 public with sharing class NewTradeController {
 
     public static EburyTradeSettings__c tradeSettings = EburyTradeSettings__c.getInstance('Default');
 
+    /**
+    * @descripiton returns real-time exchange rate data 
+    *  for all available or a specific set of currencies
+    * @author Bruna Girão 
+    * @param sellCurrency 
+    * @param buyCurrency 
+    * @return ActionResponse.Response 
+    **/
     @AuraEnabled
     public static ActionResponse.Response getRate(String sellCurrency, String buyCurrency) {
 
@@ -39,6 +67,12 @@ public with sharing class NewTradeController {
 
     }
 
+    /**
+    * @description create a new Trade__c record in Salesforce
+    * @author Bruna Girão
+    * @param tradeInfoJSON 
+    * @return ActionResponse.Response 
+    **/
     @AuraEnabled
     public static ActionResponse.Response createNewTrade(String tradeInfoJSON){
 
@@ -78,6 +112,11 @@ public with sharing class NewTradeController {
         }
     }
 
+    /**
+    * @description send a notification to the user when Trade__c record is created
+    * @author Bruna
+    * @param newTrade 
+    **/
     public static void sendNotificationNewTrade(Trade__c newTrade) {
 
         String tradeQueue                    = tradeSettings.EburyQueue__c;
