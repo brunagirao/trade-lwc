@@ -20,7 +20,7 @@ echo " PUSHED CHANGES!"
 # Run Test 
 echo "4. RUNNING TESTS..."
 sfdx force:apex:test:run -n "NewTradeControllerTest" -r human 
-echo "4. RUNNED TESTS!"
+echo " RUNNED TESTS!"
 
 
 
