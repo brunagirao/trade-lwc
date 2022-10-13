@@ -75,7 +75,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         this.sellCurrencySelected = element.target.value;
         console.log('Sell Currency: ', this.sellCurrencySelected);
         
-        if (this.buyCurrencySelected !== undefined && this.buyCurrencySelected !== null) {
+        if (this.buyCurrencySelected !== undefined && this.buyCurrencySelected !== null && this.buyCurrencySelected !== '') {
             this.getRate(); 
         }
     }
@@ -86,7 +86,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
 		this.buyCurrencySelected = element.target.value;
         console.log('Buy Currency: ', this.buyCurrencySelected);
 
-        if (this.sellCurrencySelected !== undefined && this.sellCurrencySelected !== null) {
+        if (this.sellCurrencySelected !== undefined && this.sellCurrencySelected !== null && this.sellCurrencySelected !== '') {
             this.getRate(); 
         }
         
