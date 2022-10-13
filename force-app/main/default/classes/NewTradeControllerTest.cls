@@ -1,4 +1,4 @@
-/**
+/**************************************************************************************************
 * Name          : NewTradeControllerTest
 * Purpose       : Test Class to NewTradeController
 * Author        : Bruna Girão
@@ -7,7 +7,7 @@
 Date                Modified By            Description
 --------------------------------------------------------------------------------------------------
  12-10-2022   	    Bruna Girão            created class and add test methods 
-**/
+***************************************************************************************************/
 
 @isTest
 public with sharing class NewTradeControllerTest {

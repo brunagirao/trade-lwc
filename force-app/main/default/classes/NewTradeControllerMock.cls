@@ -1,3 +1,14 @@
+/*************************************************************************************************
+* Name          : NewTradeControllerMock
+* Purpose       : Test Mock Class to NewTradeControllerTest
+* Author        : Bruna Girão
+* Date          : 12-10-2022  
+--------------------------------------------------------------------------------------------------
+Date                Modified By            Description
+--------------------------------------------------------------------------------------------------
+ 12-10-2022   	    Bruna Girão            created class and add methods 
+***************************************************************************************************/
+@isTest
 global with sharing class NewTradeControllerMock implements HttpCalloutMock{
     
 	private Integer httpCode;
