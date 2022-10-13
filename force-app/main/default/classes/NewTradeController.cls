@@ -54,14 +54,22 @@ public with sharing class NewTradeController {
             );
             insert trade;
 
-            if(trade.Id != null) {
-                sendNotificationNewTrade(trade);
+            Trade__c newTrade = [
+                SELECT Id, Name,
+                       Buy_Amount__c, Buy_Currency__c, 
+                       Sell_Amount__c, Sell_Currency__c,
+                       Rate__c, CreatedDate
+                  FROM Trade__c 
+                 WHERE Id =: trade.Id
+                 LIMIT 1
+            ];
+
+            if(newTrade != null) {
+                sendNotificationNewTrade(newTrade);
             }
             
-            String tradeNumber = [SELECT Name FROM Trade__c WHERE Id =: trade.Id].Name;
-
             ActionResponse.Response tradeResponse = new ActionResponse.Response(
-                false, System.Label.ET_TRADE_CREATED_SUCCESS + ' ' + tradeNumber, JSON.serialize(trade)
+                false, System.Label.ET_TRADE_CREATED_SUCCESS + ' ' + newTrade.Name, JSON.serialize(trade)
             );
             return tradeResponse;
             
