@@ -137,6 +137,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
             this.showToast(this.TOAST_TITLE.ERROR, response.Message, this.TOAST_VARIANT.ERROR);
         } else {
             this.showToast(this.TOAST_TITLE.SUCCESS, response.Message, this.TOAST_VARIANT.SUCCESS);
+            this.resetFields();
             setTimeout(() => {
                 this.navigateToRecordPage(tradeResponse.Id, 'Trade__c');
             }, '1000');
@@ -198,6 +199,14 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         }, '1000');
 
         this.closeTab();
+    }
+
+    resetFields() {
+        this.sellCurrencySelected = undefined;
+        this.buyCurrencySelected  = undefined;
+        this.rate                 = undefined;
+        this.buyAmount            = undefined;
+        this.sellAmount           = undefined;
     }
 
     navigateToRecordPage(recordId, objectApiName) {
