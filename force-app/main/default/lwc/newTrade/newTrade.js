@@ -3,23 +3,23 @@ import { ShowToastEvent }                     from 'lightning/platformShowToastE
 import { NavigationMixin }                    from 'lightning/navigation';
 
 //GET PICKLIST VALUES N' OBJECT INFO
-import { getPicklistValues } from 'lightning/uiObjectInfoApi';
-import { getObjectInfo }     from 'lightning/uiObjectInfoApi';
+import { getPicklistValues }                  from 'lightning/uiObjectInfoApi';
+import { getObjectInfo }                      from 'lightning/uiObjectInfoApi';
 
 //DEFINING VARIABLES TO GET PICKLIST AND OBJECT INFO
-import CURRENCIES            from '@salesforce/schema/Trade__c.Sell_Currency__c';
-import TRADE_OBJECT          from '@salesforce/schema/Trade__c';
+import CURRENCIES                             from '@salesforce/schema/Trade__c.Sell_Currency__c';
+import TRADE_OBJECT                           from '@salesforce/schema/Trade__c';
 
 //IMPORT APEX METHODS
-import getRate               from '@salesforce/apex/NewTradeController.getRate';
-import createNewTrade        from '@salesforce/apex/NewTradeController.createNewTrade';
+import getRate                                from '@salesforce/apex/NewTradeController.getRate';
+import createNewTrade                         from '@salesforce/apex/NewTradeController.createNewTrade';
 
 //CUSTOM LABELS | ET = Ebury Trading
-import ET_BUY_AMOUNT_VALUE_NOT_FOUND        from '@salesforce/label/c.ET_BUY_AMOUNT_VALUE_NOT_FOUND';		
-import ET_BUY_CURRENCY_NOT_SELECTED         from '@salesforce/label/c.ET_BUY_CURRENCY_NOT_SELECTED';
-import ET_RATE_VALUE_NOT_FOUND	            from '@salesforce/label/c.ET_RATE_VALUE_NOT_FOUND';
-import ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE    from '@salesforce/label/c.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE';
-import ET_SELL_CURRENCY_NOT_SELECTED        from '@salesforce/label/c.ET_SELL_CURRENCY_NOT_SELECTED';
+import ET_BUY_AMOUNT_VALUE_NOT_FOUND          from '@salesforce/label/c.ET_BUY_AMOUNT_VALUE_NOT_FOUND';		
+import ET_BUY_CURRENCY_NOT_SELECTED           from '@salesforce/label/c.ET_BUY_CURRENCY_NOT_SELECTED';
+import ET_RATE_VALUE_NOT_FOUND	              from '@salesforce/label/c.ET_RATE_VALUE_NOT_FOUND';
+import ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE      from '@salesforce/label/c.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE';
+import ET_SELL_CURRENCY_NOT_SELECTED          from '@salesforce/label/c.ET_SELL_CURRENCY_NOT_SELECTED';
 
 export default class NewTrade extends NavigationMixin(LightningElement) {
 
