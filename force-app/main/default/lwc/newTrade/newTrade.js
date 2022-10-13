@@ -108,23 +108,21 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
     //ASYNCS
     async getRate() {
 
-        // let response  = await getRate({
-        //     sellCurrency : this.sellCurrencySelected,
-        //     buyCurrency  : this.buyCurrencySelected,
-        // });
+        let response  = await getRate({
+            sellCurrency : this.sellCurrencySelected,
+            buyCurrency  : this.buyCurrencySelected,
+        });
 
-        // let rateResponse = JSON.parse(response.ResponseJSON);
+        let rateResponse = JSON.parse(response.ResponseJSON);
 
-        // if (response.HasError || rateResponse.length < 1) {
-        //     this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
-        //     setTimeout(() => {
-        //         this.navigateToObjectHome('Trade__c');
-        //     }, '6000');
-        // } else {
-        //     this.rate = rateResponse.Rate;
-        // }
-
-        this.rate = 1.589;
+        if (response.HasError || rateResponse.length < 1) {
+            this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
+            setTimeout(() => {
+                this.navigateToObjectHome('Trade__c');
+            }, '6000');
+        } else {
+            this.rate = rateResponse.Rate;
+        }
 
     }
 
