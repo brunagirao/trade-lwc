@@ -116,7 +116,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         let rateResponse = JSON.parse(response.ResponseJSON);
 
         if (response.HasError || rateResponse.length < 1) {
-            this.showToast(this.TOAST_TITLE.ERROR, 'Erro to get rate', this.TOAST_VARIANT.ERROR);
+            this.showToast(this.TOAST_TITLE.ERROR, response.Message, this.TOAST_VARIANT.ERROR);
             setTimeout(() => {
                 this.navigateToObjectHome('Trade__c');
             }, '6000');
