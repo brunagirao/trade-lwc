@@ -58,7 +58,7 @@ public with sharing class NewTradeController {
                 return responseRate;
 
             } else {
-                throw new CalloutException('CalloutException: ' + response.getBody());
+                return new ActionResponse.Response(response.getBody());
             }
 
         } catch (Exception e) {
