@@ -1,59 +1,59 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent }                     from 'lightning/platformShowToastEvent';
+import { NavigationMixin }                    from 'lightning/navigation';
 
 //GET PICKLIST VALUES N' OBJECT INFO
-import { getPicklistValues } from 'lightning/uiObjectInfoApi';
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { getPicklistValues }                  from 'lightning/uiObjectInfoApi';
+import { getObjectInfo }                      from 'lightning/uiObjectInfoApi';
 
 //DEFINING VARIABLES TO GET PICKLIST AND OBJECT INFO
-import CURRENCIES from '@salesforce/schema/Trade__c.Sell_Currency__c';
-import TRADE_OBJECT from '@salesforce/schema/Trade__c';
+import CURRENCIES                             from '@salesforce/schema/Trade__c.Sell_Currency__c';
+import TRADE_OBJECT                           from '@salesforce/schema/Trade__c';
 
 //IMPORT APEX METHODS
-import getRate from '@salesforce/apex/NewTradeController.getRate';
-import createNewTrade from '@salesforce/apex/NewTradeController.createNewTrade';
+import getRate                                from '@salesforce/apex/NewTradeController.getRate';
+import createNewTrade                         from '@salesforce/apex/NewTradeController.createNewTrade';
 
 //CUSTOM LABELS | ET = Ebury Trading
-import ET_BUY_AMOUNT_VALUE_NOT_FOUND from '@salesforce/label/c.ET_BUY_AMOUNT_VALUE_NOT_FOUND';
-import ET_BUY_CURRENCY_NOT_SELECTED from '@salesforce/label/c.ET_BUY_CURRENCY_NOT_SELECTED';
-import ET_RATE_VALUE_NOT_FOUND from '@salesforce/label/c.ET_RATE_VALUE_NOT_FOUND';
-import ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE from '@salesforce/label/c.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE';
-import ET_SELL_CURRENCY_NOT_SELECTED from '@salesforce/label/c.ET_SELL_CURRENCY_NOT_SELECTED';
+import ET_BUY_AMOUNT_VALUE_NOT_FOUND          from '@salesforce/label/c.ET_BUY_AMOUNT_VALUE_NOT_FOUND';		
+import ET_BUY_CURRENCY_NOT_SELECTED           from '@salesforce/label/c.ET_BUY_CURRENCY_NOT_SELECTED';
+import ET_RATE_VALUE_NOT_FOUND	              from '@salesforce/label/c.ET_RATE_VALUE_NOT_FOUND';
+import ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE      from '@salesforce/label/c.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE';
+import ET_SELL_CURRENCY_NOT_SELECTED          from '@salesforce/label/c.ET_SELL_CURRENCY_NOT_SELECTED';
 
 export default class NewTrade extends NavigationMixin(LightningElement) {
 
     //API
     @api TOAST_VARIANT = {
-        ERROR: 'error',
-        SUCCESS: 'success',
-        WARNING: 'warning'
+       ERROR   : 'error',
+       SUCCESS : 'success',
+       WARNING : 'warning'
     }
-
+    
     @api TOAST_TITLE = {
-        ERROR: 'Error',
-        SUCCESS: 'Success',
-        WARNING: 'Warning'
+       ERROR   : 'Error',
+       SUCCESS : 'Success',
+       WARNING : 'Warning'
     }
-
+    
     //CUSTOM LABELS
     LABEL = {
-        ET_BUY_AMOUNT_VALUE_NOT_FOUND,
+        ET_BUY_AMOUNT_VALUE_NOT_FOUND,			
         ET_BUY_CURRENCY_NOT_SELECTED,
         ET_RATE_VALUE_NOT_FOUND,
-        ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE,
+        ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE,	
         ET_SELL_CURRENCY_NOT_SELECTED
     }
 
     //TRACKS
-    @track sellCurrencyOptions = [];
-    @track buyCurrencyOptions = [];
+    @track sellCurrencyOptions  = [];
+    @track buyCurrencyOptions   = [];
     @track sellCurrencySelected;
     @track buyCurrencySelected;
     @track rate;
     @track buyAmount;
     @track sellAmount;
-
+    
     //WIRES
     @wire(getObjectInfo, { objectApiName: TRADE_OBJECT })
     tradeInfo;
@@ -69,25 +69,24 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
     //HANDLES
     handleSelectedSellCurrency(element) {
         console.log('handleSelectedSellCurrency');
-
+        
         this.sellCurrencySelected = element.target.value;
         console.log('Sell Currency: ', this.sellCurrencySelected);
-
+        
         if (this.buyCurrencySelected !== undefined && this.buyCurrencySelected !== null && this.buyCurrencySelected !== '') {
-            this.getRate();
+            this.getRate(); 
         }
     }
-
+    
     handleSelectedBuyCurrency(element) {
         console.log('handleSelectedBuyCurrency');
-
-        this.buyCurrencySelected = element.target.value;
+        
+		this.buyCurrencySelected = element.target.value;
         console.log('Buy Currency: ', this.buyCurrencySelected);
 
         if (this.sellCurrencySelected !== undefined && this.sellCurrencySelected !== null && this.sellCurrencySelected !== '') {
-            this.getRate();
+            this.getRate(); 
         }
-
     }
 
     handleSellAmountChange(element) {
@@ -95,7 +94,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
             this.showToast(this.TOAST_TITLE.WARNING, this.LABEL.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE, this.TOAST_VARIANT.WARNING);
         } else if (this.rate !== undefined && this.rate !== null) {
             this.sellAmount = element.target.value;
-            this.buyAmount = this.sellAmount * this.rate;
+            this.buyAmount  =  this.sellAmount * this.rate;
         } else {
             this.showToast(this.TOAST_TITLE.WARNING, this.LABEL.ET_RATE_VALUE_NOT_FOUND, this.TOAST_VARIANT.WARNING);
         }
@@ -103,9 +102,10 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
 
     //ASYNCS
     async getRate() {
-        let response = await getRate({
-            sellCurrency: this.sellCurrencySelected,
-            buyCurrency : this.buyCurrencySelected,
+
+        let response  = await getRate({
+            sellCurrency : this.sellCurrencySelected,
+            buyCurrency  : this.buyCurrencySelected,
         });
 
         let rateResponse = JSON.parse(response.ResponseJSON);
@@ -124,7 +124,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         let response = await createNewTrade({
             tradeInfoJSON: JSON.stringify(tradeInfo)
         });
-
+        
         let tradeResponse = JSON.parse(response.ResponseJSON);
 
         if (response.HasError || tradeResponse.length < 1) {
@@ -147,7 +147,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         });
         this.dispatchEvent(event);
     }
-
+    
     //OTHER METHODS
     sendNewTrade() {
 
@@ -161,7 +161,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
             return 0;
         }
 
-        if (this.sellAmount < 0) {
+        if (this.sellAmount < 0 ) {
             this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_SELL_AMOUNT_CANNOT_BE_NEGATIVE, this.TOAST_VARIANT.ERROR);
             return 0;
         }
@@ -171,7 +171,7 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
             return 0;
         }
 
-        if (this.rate == undefined || this.rate == null) {
+        if (this.rate == undefined || this.rate == null) { 
             this.showToast(this.TOAST_TITLE.ERROR, this.LABEL.ET_RATE_VALUE_NOT_FOUND, this.TOAST_VARIANT.ERROR);
             return 0;
         }
@@ -182,8 +182,8 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
             sellAmount   : this.sellAmount,
             buyAmount    : this.buyAmount,
             rate         : this.rate
-        }  
-
+        }
+        
         this.createNewTrade(tradeInfo);
     }
 
@@ -191,7 +191,6 @@ export default class NewTrade extends NavigationMixin(LightningElement) {
         setTimeout(() => {
             this.navigateToObjectHome('Trade__c');
         }, '1000');
-
     }
 
     resetFields() {
